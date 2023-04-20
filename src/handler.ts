@@ -32,11 +32,13 @@ export const handler: Handler = async () => {
   const results = await Promise.allSettled(
     CONFIG.PROVIDERS.map(async (providerUrl) => {
       const response = await axios.get(providerUrl);
-      const data: Route[] = response.data;
+      let data: Route[] = response.data;
 
-      logger.info(`Got ${data.length} from ${providerUrl}`);
+      logger.info(`Got ${data.length} items from ${providerUrl}`);
 
       const chunkedData = chunkify(data);
+
+      data = null!;
 
       logger.info(`Inserting data from ${providerUrl}`);
 
@@ -65,7 +67,7 @@ export const handler: Handler = async () => {
   );
 
   if (hasSucceededInjections) {
-    database.raw(getSwapTablesQuery());
+    await database.raw(getSwapTablesQuery());
   }
 
   results.forEach((result) => {
