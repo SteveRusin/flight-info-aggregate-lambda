@@ -1,10 +1,11 @@
-export function getTableName(tableSuffix: string) {
-  return `ROUTES_${tableSuffix}`;
-}
+export const NEW_ROUTES_TABLE_NAME = 'ROUTES_NEW';
+export const ROUTES_TABLE_NAME = 'ROUTES';
 
-export function getCreateRouteTableQuery(tableSuffix: string) {
+export function getCreateRouteTableQuery() {
   return /* sql */ `
-    CREATE TABLE "${getTableName(tableSuffix)}" (
+    DROP TABLE IF EXISTS ${NEW_ROUTES_TABLE_NAME};
+
+    CREATE TABLE ${NEW_ROUTES_TABLE_NAME} (
     AIRLINE VARCHAR(50),
     SOURCE_AIRPORT VARCHAR(50),
     DESTINATION_AIRPORT VARCHAR(50),
@@ -13,5 +14,13 @@ export function getCreateRouteTableQuery(tableSuffix: string) {
     EQUIPMENT VARCHAR(50),
     PRIMARY KEY (AIRLINE, SOURCE_AIRPORT, DESTINATION_AIRPORT, CODE_SHARE, EQUIPMENT, STOPS)
   );
+  `;
+}
+
+export function getSwapTablesQuery() {
+  return /* sql */ `
+    DROP TABLE IF EXISTS ${ROUTES_TABLE_NAME};
+
+    ALTER TABLE ${NEW_ROUTES_TABLE_NAME} RENAME TO ${ROUTES_TABLE_NAME};
   `;
 }

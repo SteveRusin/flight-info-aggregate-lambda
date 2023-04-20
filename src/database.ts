@@ -3,7 +3,6 @@ import { knex } from 'knex';
 import { CONFIG } from './config';
 
 export const database = knex({
-  debug: true,
   client: 'pg',
   connection: () => {
     return {

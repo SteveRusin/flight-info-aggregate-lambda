@@ -1,10 +1,13 @@
 import { Handler } from 'aws-lambda';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import { v4 } from 'uuid';
 
 import { database } from './database';
-import { getCreateRouteTableQuery, getTableName } from './route-table';
+import {
+  NEW_ROUTES_TABLE_NAME,
+  getCreateRouteTableQuery,
+  getSwapTablesQuery,
+} from './route-table';
 import { mapRoutesToRouteTable } from './mapper';
 import { CONFIG } from './config';
 import { chunkify } from './chunkify';
@@ -18,10 +21,9 @@ axiosRetry(axios, {
 
 export const handler: Handler = async () => {
   logger.info(`Starting aggregation job at: ${new Date()}`);
-  const tableSuffix = v4();
 
-  logger.info(`Creating new table: ${getTableName(tableSuffix)}`);
-  await database.raw(getCreateRouteTableQuery(tableSuffix));
+  logger.info(`Creating table for new injection`);
+  await database.raw(getCreateRouteTableQuery());
 
   logger.info(
     `Aggregating data for the next providers: ${CONFIG.PROVIDERS.join('; ')}`,
@@ -40,7 +42,7 @@ export const handler: Handler = async () => {
 
       await Promise.all(
         chunkedData.map((chunk) =>
-          database(getTableName(tableSuffix))
+          database(database.raw(NEW_ROUTES_TABLE_NAME))
             .insert(mapRoutesToRouteTable(chunk))
             .onConflict([
               'airline',
@@ -57,6 +59,14 @@ export const handler: Handler = async () => {
       return providerUrl;
     }),
   );
+
+  const hasSucceededInjections = results.some(
+    (res) => res.status === 'fulfilled',
+  );
+
+  if (hasSucceededInjections) {
+    database.raw(getSwapTablesQuery());
+  }
 
   results.forEach((result) => {
     if (result.status === 'fulfilled') {
