@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "tsc *.ts src/*.ts && node-lambda run -f .env",
+    "dev": "nodemon -w src -e ts -x node --inspect -r ts-node/register -r dotenv/config ./run-local.ts",
     "lint": "NODE_ENV=production eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "author": "",
@@ -14,11 +14,13 @@
     "@types/aws-lambda": "^8.10.114",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
+    "dotenv": "^16.0.3",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
-    "node-lambda": "^1.2.0",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
   "dependencies": {
@@ -26,8 +28,10 @@
     "@types/uuid": "^9.0.1",
     "aws-lambda": "^1.0.7",
     "axios": "^1.3.5",
+    "axios-retry": "^3.4.0",
     "knex": "^2.4.2",
     "pg": "^8.10.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2"
   }
 }
