@@ -34,3 +34,4 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 /sql/db-data
+/sql/int-data
