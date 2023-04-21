@@ -16,7 +16,7 @@ import { logger } from './logger';
 
 axiosRetry(axios, {
   retries: 3,
-  retryDelay: () => 10_000,
+  retryDelay: () => CONFIG.RETRY_DELAY,
 });
 
 export const handler: Handler = async () => {

@@ -5,4 +5,5 @@ export const CONFIG = {
   DB_PASSWORD: process.env.DB_PASSWORD!,
   DATABASE: process.env.DATABASE!,
   DB_USER: process.env.DB_USER!,
+  RETRY_DELAY: (process.env.RETRY_DELAY && +process.env.RETRY_DELAY) || 10_000,
 } as const;

@@ -1,4 +1,4 @@
-import { BeforeAll, AfterAll, Before } from '@cucumber/cucumber';
+import { BeforeAll, AfterAll, Before, setDefaultTimeout } from '@cucumber/cucumber';
 import { setupServer } from 'msw/node';
 
 import { database } from '../../src/database';
@@ -17,3 +17,5 @@ AfterAll(() => {
   httpServer.close();
   database.destroy();
 });
+
+setDefaultTimeout(30_000);

@@ -31,6 +31,25 @@ Given('datasources returns uniq records', () => {
   );
 });
 
+Given('datasource1 fail first time', () => {
+  let provider1InvocationNum = 0;
+
+  httpServer.use(
+    rest.get('http://provider1', (_req, res, ctx) => {
+      if (provider1InvocationNum < 1) {
+        provider1InvocationNum++;
+
+        return res(ctx.status(500));
+      }
+
+      return res(ctx.json([getRouteMock1()]));
+    }),
+    rest.get('http://provider2', (_req, res, ctx) => {
+      return res(ctx.json([getRouteMock2()]));
+    }),
+  );
+});
+
 When('lambda is invoked', async () => {
   await handler({}, {} as Context, () => null);
 });
