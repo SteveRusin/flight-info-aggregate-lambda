@@ -20,6 +20,14 @@ axiosRetry(axios, {
 });
 
 export const handler: Handler = async () => {
+  const providersNotDefined = CONFIG.PROVIDERS.length === 0;
+
+  if (providersNotDefined) {
+    logger.info('No providers defined. Terminating job');
+
+    return;
+  }
+
   logger.info(`Starting aggregation job at: ${new Date()}`);
 
   logger.info(`Creating table for new injection`);
