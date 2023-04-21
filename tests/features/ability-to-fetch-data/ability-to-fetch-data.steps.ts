@@ -20,14 +20,25 @@ Given('datasources returns duplicate data', () => {
   );
 });
 
+Given('datasources returns uniq records', () => {
+  httpServer.use(
+    rest.get('http://provider1', (_req, res, ctx) => {
+      return res(ctx.json([getRouteMock1()]));
+    }),
+    rest.get('http://provider2', (_req, res, ctx) => {
+      return res(ctx.json([getRouteMock2()]));
+    }),
+  );
+});
+
 When('lambda is invoked', async () => {
   await handler({}, {} as Context, () => null);
 });
 
-Then('database should contain uniq data', async () => {
+Then('database should contain {int} records', async (recordsNumber: number) => {
   const [result] = await database
     .count('*')
     .from(database.raw(ROUTES_TABLE_NAME));
 
-  expect(+result.count).equal(2);
+  expect(+result.count).equal(recordsNumber);
 });
