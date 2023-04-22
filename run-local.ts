@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Context } from 'aws-lambda';
 
 import { handler } from './src/handler';

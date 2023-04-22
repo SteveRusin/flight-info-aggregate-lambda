@@ -35,3 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 /sql/db-data
 /sql/int-data
+flight-info-aggregate-lambda.zip

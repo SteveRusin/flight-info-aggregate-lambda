@@ -1,4 +1,15 @@
 services:
+  flight-info-aggregate-lambda:
+    container_name: 'integration-flight-info-aggregate-lambda'
+    build:
+      context: .
+      target: build
+    env_file:
+      - ./.env.integration
+    depends_on:
+      - database
+
+  #todo
   database:
     container_name: 'integration-flight-booking-postgres'
     image: 'postgres:14'
