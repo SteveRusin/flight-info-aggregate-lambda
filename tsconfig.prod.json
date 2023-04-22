@@ -1,0 +1,9 @@
+{
+  "extends": ["./tsconfig.json"],
+  "compilerOptions": {
+    "sourceRoot": "",
+    "sourceMap": false,
+    "declaration": false
+  },
+  "exclude": ["./tests", "./run-local.ts", "**/*.spec.ts"]
+}
