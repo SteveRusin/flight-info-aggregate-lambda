@@ -12,5 +12,5 @@ Feature: Ability to fetch data
   Scenario: Should retry to fetch data if datasource errors
     Given datasource1 fail first time
     When lambda is invoked
-    Then database should contain 2 records
+    Then database should contain 3 records
 
