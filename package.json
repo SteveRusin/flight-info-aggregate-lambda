@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc --project ../tsconfig.prod.json",
     "lambda:update": "aws lambda update-function-code --function-name flight-info-aggregate-lambda --zip-file fileb://./dist/flight-info-aggregate-lambda.zip ",
-    "prebuild:ci": "npm run lint && npm run test",
-    "build:ci": "sh ./build.sh",
+    "test:ci": "npm run lint && npm run test",
+    "build:ci": "./build.sh",
+    "zip-dist": "cd dist && zip -9 -q -r ./flight-info-aggregate-lambda.zip ./",
     "start:dev": "nodemon -w src -e ts -x node --inspect -r ts-node/register -r dotenv/config ./run-local.ts",
     "lint:eslint": "NODE_ENV=production eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lint": "npm run lint:eslint",

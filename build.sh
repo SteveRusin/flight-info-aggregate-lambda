@@ -17,7 +17,7 @@ npm run build
 
 if ! command -v zip &> /dev/null
 then
-  apk update && apk add zip
+  apt update && apt add zip
 fi
 
 zip -9 -q -r ./flight-info-aggregate-lambda.zip ./
