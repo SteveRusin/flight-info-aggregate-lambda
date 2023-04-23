@@ -20,9 +20,8 @@ jobs:
         with:
           node-version: 18
       - run: npm ci
-    # todo uncomment
-    #  - run: npm run test:ci
-    #  - run: npm run compose:test:integration
+      - run: npm run test:ci
+      - run: npm run compose:test:integration
       - run: npm run build:ci
 
       - name: Configure aws credentials
