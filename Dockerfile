@@ -1,18 +1,13 @@
-#todo finish int tests
+FROM node:18.14.0-alpine AS build
 
-FROM node:18.14.0-slim AS build
+RUN apk update && apk add bash
 
-COPY package*.json ./src
+WORKDIR app
 
-WORKDIR /src
+COPY package*.json ./
 
 RUN npm ci
 
-COPY . .
+COPY ./ ./
 
 RUN npm run build:ci
-
-FROM build AS prune
-
-ENV NODE_ENV=production
-RUN npm prune --production --verbose

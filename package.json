@@ -6,13 +6,14 @@
   "scripts": {
     "build": "tsc --project ../tsconfig.prod.json",
     "lambda:update": "aws lambda update-function-code --function-name flight-info-aggregate-lambda --zip-file fileb://./dist/flight-info-aggregate-lambda.zip ",
-    "#todooo____prebuild:ci": "npm run lint && npm run test",
+    "prebuild:ci": "npm run lint && npm run test",
     "build:ci": "sh ./build.sh",
     "start:dev": "nodemon -w src -e ts -x node --inspect -r ts-node/register -r dotenv/config ./run-local.ts",
     "lint:eslint": "NODE_ENV=production eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lint": "npm run lint:eslint",
     "test": "jest",
-    "test:integration": "DOTENV_CONFIG_PATH=./.env.integration npx cucumber-js --config cucumber.json"
+    "test:integration": "DOTENV_CONFIG_PATH=./.env.integration cucumber-js --config cucumber.json",
+    "compose:test:integration": "docker compose -f docker-compose.int.yml up --build --abort-on-container-exit"
   },
   "engines": {
     "node": "^18",
