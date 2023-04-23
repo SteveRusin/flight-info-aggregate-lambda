@@ -7,7 +7,7 @@ on:
 
 jobs:
   main:
-    name: Test and build
+    name: Build and deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,3 +21,12 @@ jobs:
       - run: npm run test:ci
       - run: npm run compose:test:integration
       - run: npm run build:ci
+
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - run: npm run lambda:update
+
