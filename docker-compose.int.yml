@@ -4,7 +4,6 @@ services:
     build:
       context: .
       target: build
-    #  command: ./wait-for-port-and-run-test.sh
     command: npm run test:integration
     healthcheck:
       # wait for database to be ready to accept connections
