@@ -15,10 +15,11 @@ npm ci --omit=dev
 
 npm run build
 
-if ! command -v zip &> /dev/null
+if command -v zip &> /dev/null
 then
-  apt update && apt add zip
+  zip -9 -q -r ./flight-info-aggregate-lambda.zip ./
+else
+  echo "zip command not found. Skipping step"
 fi
 
-zip -9 -q -r ./flight-info-aggregate-lambda.zip ./
 

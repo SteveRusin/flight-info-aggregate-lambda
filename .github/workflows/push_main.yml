@@ -19,5 +19,5 @@ jobs:
           node-version: 18
       - run: npm ci
       - run: npm run test:ci
-      - run: npm run build:ci
       - run: npm run compose:test:integration
+      - run: npm run build:ci
