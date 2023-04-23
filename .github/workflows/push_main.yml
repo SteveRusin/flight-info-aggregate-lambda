@@ -1,0 +1,20 @@
+name: Build main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  main:
+    name: Compile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build and Test
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm run build:ci
