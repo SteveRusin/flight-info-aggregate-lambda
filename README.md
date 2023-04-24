@@ -4,6 +4,11 @@
 
 This lambda fetches route info hourly from comma separated providers defined by `process.env.PROVIDERS` variable and inserts it into `ROUTES_NEW` table. Once all data have been inserted it swaps `ROUTES` and `ROUTES_NEW` table, hence avoiding db locks.
 
+## Prerequisite
+
+- Node >= v18
+- Docker >=20
+
 ## Project installation instructions
 
 1. Clone the project
