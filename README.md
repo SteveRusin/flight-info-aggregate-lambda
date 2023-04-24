@@ -47,3 +47,7 @@ Project can be configured using `.env` file for local development and `.env.inte
 
 - To run int tests in docker run `npm run compose:test:integration`
 - To run int tests outside docker you need to start integration image of database by running `npm run compose:db-int:up` followed by `npm run test:integration` command.
+
+## CI/CD
+
+- CD/CD is done using [github action](./.github/workflows/push_main.yml)
